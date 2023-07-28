@@ -3,7 +3,7 @@
   metadata:
     name: {{ .Values.component }}
     labels:
-      {{ - include "roboshop.labels" . | nindent 4 }}
+      {{- include "roboshop.labels" . | nindent 4 }}
   spec:
     type: {{ .Values.service.type }}
     ports:
@@ -12,6 +12,6 @@
         protocol: TCP
         name: http
     selector:
-      {{ - include "roboshop.selectorLabels" . | nindent 4 }}
+      {{- include "roboshop.selectorLabels" . | nindent 4 }}
 
 
