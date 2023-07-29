@@ -1,3 +1,4 @@
+{{- if .Values.schemaLoadJob.create -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -10,6 +11,15 @@ spec:
     spec:
       containers:
         - name: schema-loader
-          image: 584455519448.dkr.ecr.us-east-1.amazonaws.com/schema-loader:2.0.0
-        restartPolicy: Never
+          image: 584455519448.dkr.ecr.us-east-1.amazonaws.com/schema-loader:2.0.1
+          args: [ "{{ .Values.schemaLoadJob.type }}","{{ .Values.component }}" ]
+          env:
+            - name: env
+              value: {{ .Values.env }}
+      restartPolicy: Never
   backoffLimit: 1
+{{- end }}
+
+#1st line is condition to not create job for all components and mentioned in values.yaml
+#to create job for remaining components need to mention in individual component helm prod.yaml
+# assign env=prod in prod.yaml in component
