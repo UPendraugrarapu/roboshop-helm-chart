@@ -5,9 +5,7 @@ metadata:
   name: {{ .Values.component }}-schema-loader
   labels:
     component: {{ .Values.component }}
-    annotations:
-      "helm.sh/hook": post-install
-spec:
+ spec:
   template:
     spec:
       serviceAccountName: {{ .Values.component }}
