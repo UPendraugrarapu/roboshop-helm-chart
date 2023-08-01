@@ -5,6 +5,9 @@ metadata:
   name: {{ .Values.component }}-schema-loader
   labels:
     component: {{ .Values.component }}
+    annotations:
+      { { - toYaml . | nindent 4 } }
+      "helm.sh/hook": post-install
 spec:
   template:
     spec:
@@ -12,6 +15,7 @@ spec:
       containers:
         - name: schema-loader
           image: 584455519448.dkr.ecr.us-east-1.amazonaws.com/schema-loader:2.0.3
+          command: [ "bash","-x", "/run.sh" ]
           args: [ "{{ .Values.schemaLoadJob.type }}","{{ .Values.component }}" ]
           env:
             - name: env
